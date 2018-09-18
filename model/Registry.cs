@@ -14,15 +14,16 @@ namespace _1dv607_W2
             string xmlcontents = doc.InnerXml;
             Console.WriteLine(xmlcontents);
 
-            XmlNodeList userNodes = doc.SelectNodes("//users/user");
-            foreach (XmlNode userNode in userNodes)
+            XmlNodeList memberNodes = doc.SelectNodes("//memberRegistry/member");
+            foreach (XmlNode memberNode in memberNodes)
             {
-                int age = int.Parse(userNode.Attributes["age"].Value);
-                userNode.Attributes["age"].Value = (age + 1).ToString();
+                int id = int.Parse(memberNode.Attributes["id"].Value);
+                string name = memberNode.Attributes["name"].Value;
+                string pNumber = memberNode.Attributes["personalNumber"].Value;
+                Console.WriteLine(id + " " + name + " " + pNumber);
+                //memberNode.Attributes["age"].Value = (age + 1).ToString();
             }
-            doc.Save(@"./members.xml");
-
-            Console.WriteLine(doc);
+            //doc.Save(@"./members.xml");
         }
     }
 }
