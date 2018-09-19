@@ -10,6 +10,8 @@ namespace _1dv607_W2
             view.PresentFirstMsg();
 
             e = view.GetEvent();
+
+            //TO CREATE A MEMBER
             if (e == ConsoleView.Event.CreateMember)
             {
                 string inputName = view.GetName();
@@ -18,6 +20,8 @@ namespace _1dv607_W2
                 view.PresentFirstMsg();
                 return true;
             }
+
+            //TO EXIT PROGRAM
             if (e == ConsoleView.Event.Exit)
             {
                 return false;
