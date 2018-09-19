@@ -8,7 +8,9 @@ namespace _1dv607_W2
         {
             CreateMember,
             Exit,
-            None
+            VerboseList,
+            None,
+
         }
 
         public void PresentFirstMsg()
@@ -55,6 +57,10 @@ namespace _1dv607_W2
             if (character == 'e')
             {
                 return Event.Exit;
+            }
+            if (character == 'v')
+            {
+                return Event.VerboseList;
             }
             return Event.None;
         }

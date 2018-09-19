@@ -16,7 +16,7 @@ namespace _1dv607_W2
             // Varför hämta och spara allt för varenda operation?
             // Så länge programmet körs kommer ändrad data finnas i minnet?
 
-            getMembers();
+            GetMembers();
             _doc.Load(@"./members.xml");
             string xmlcontents = _doc.InnerXml;
             Console.WriteLine(xmlcontents);
@@ -35,10 +35,20 @@ namespace _1dv607_W2
             }
             //doc.Save(@"./members.xml");
         }
-        public void saveMember(Member member)
+
+        public IEnumerable<Member> GetVerboseList()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                _members.Add(new Member("Hejhej", "9191919191"));
+            }
+            return _members;
+        }
+
+        public void SaveMember(Member member)
         {
             // GLÖM EJ!: Iterera alla ID:n, ta ut största talet, + 1
-        
+
             int id = _doc.SelectNodes("//memberRegistry/member").Count + 1;
 
             _doc.Load(@"./members.xml");
@@ -54,13 +64,33 @@ namespace _1dv607_W2
 
             _doc.Save(@"./members.xml");
         }
-        private List<Member> getMembers()
+        private List<Member> GetMembers()
         {
             // returnera lista med medlemmar som innehåller all info
             // iterera alla medlemmar i xml, plocka ut info och skapa nya medlemmar,
             // populera listan med medlemmar och båtar
 
             return new List<Member>();
+        }
+        public void WriteToXml()
+        {
+            /*
+
+             int id = _doc.SelectNodes("//memberRegistry/member").Count + 1;
+
+             _doc.Load(@"./members.xml");
+
+             XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
+
+             XmlElement xmlMember = _doc.CreateElement("member");
+             xmlMember.SetAttribute("id", id.ToString());
+             xmlMember.SetAttribute("name", member.Name);
+             xmlMember.SetAttribute("personalNumber", member.PersonalNumber);
+
+             memberRegistry.AppendChild(xmlMember);
+
+             _doc.Save(@"./members.xml");
+             */
         }
     }
 }

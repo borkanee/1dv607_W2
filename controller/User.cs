@@ -16,7 +16,7 @@ namespace _1dv607_W2
             {
                 string inputName = view.GetName();
                 string inputPersonalNum = view.GetPersonalNumber();
-                registry.saveMember(new Member(inputName, inputPersonalNum));
+                registry.SaveMember(new Member(inputName, inputPersonalNum));
                 view.PresentFirstMsg();
                 return true;
             }
@@ -26,8 +26,15 @@ namespace _1dv607_W2
             {
                 return false;
             }
-            //OR ELSE
-            return false;
+            if (e == ConsoleView.Event.VerboseList)
+            {
+                Console.WriteLine("TESTAR...");
+                // Vidare...
+                //var memberList = registry.GetVerboseList();
+                //view.PresentVerboseList();
+                return true;
+            }
+            return true;
         }
     }
 }
