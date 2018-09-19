@@ -7,6 +7,7 @@ namespace _1dv607_W2
         public enum Event
         {
             CreateMember,
+            List,
             Exit,
             None
         }
@@ -15,8 +16,17 @@ namespace _1dv607_W2
         {
             Console.Clear();
             Console.WriteLine("Welcome to the Jolly Pirate Yacht Club");
-            Console.WriteLine("Press e if you want to exit the program");
-            Console.WriteLine("Press c to create a member");
+            Console.WriteLine("To exit the program: press e");
+            Console.WriteLine("To create a member: press c");
+            Console.WriteLine("");
+            Console.WriteLine("To get a compact list: press l");
+            Console.WriteLine("To get a verbose list: press v");
+        }
+
+        public void PresentCompactList()
+        {
+            Console.Clear();
+            Console.WriteLine("Compact list");
         }
 
         public string GetPersonalNumber()
@@ -52,10 +62,15 @@ namespace _1dv607_W2
             {
                 return Event.CreateMember;
             }
+            if (character == 'l')
+            {
+                return Event.List;
+            }
             if (character == 'e')
             {
                 return Event.Exit;
             }
+            
             return Event.None;
         }
     }

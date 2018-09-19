@@ -10,16 +10,12 @@ namespace _1dv607_W2
         private List<Member> _members = new List<Member>();
 
         // TESTING XML...
-        public void getCompactList()
+        public List<string> getCompactList()
         {
 
-            // Varför hämta och spara allt för varenda operation?
-            // Så länge programmet körs kommer ändrad data finnas i minnet?
-
-            getMembers();
             _doc.Load(@"./members.xml");
             string xmlcontents = _doc.InnerXml;
-            Console.WriteLine(xmlcontents);
+            List<string> list = new List<string>();
 
             XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
             foreach (XmlNode memberNode in memberNodes)
@@ -30,10 +26,16 @@ namespace _1dv607_W2
                 Console.WriteLine(id + " " + name + " " + pNumber);
                 //memberNode.Attributes["age"].Value = (age + 1).ToString();
                 // _members.Add(new Member());
-
+                int numberOfBoats = 0;
+                foreach(XmlNode child in memberNode.ChildNodes)
+                {
+                    numberOfBoats += 1;
+                }
+                list.Add(name + " " + id + " " + numberOfBoats);
                 // RETURNERA LISTA TILL CONTROLLER? Kopia? KURS 1dv024?
             }
             //doc.Save(@"./members.xml");
+            return list;
         }
         public void saveMember(Member member)
         {

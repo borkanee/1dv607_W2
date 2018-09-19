@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace _1dv607_W2
 {
@@ -21,11 +22,21 @@ namespace _1dv607_W2
                 return true;
             }
 
+            //TO GET A COMPACT LIST
+            if (e == ConsoleView.Event.List)
+            {
+                List<string> compactList = registry.getCompactList();
+                view.PresentCompactList();
+                return true;
+            }
+
             //TO EXIT PROGRAM
             if (e == ConsoleView.Event.Exit)
             {
                 return false;
             }
+
+            
             //OR ELSE
             return false;
         }
