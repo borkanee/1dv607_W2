@@ -5,7 +5,7 @@ namespace _1dv607_W2
     class User
     {
         ConsoleView.Event e;
-        public bool ManageMember(ConsoleView view, Member member)
+        public bool ManageMember(ConsoleView view, Registry registry)
         {
             view.PresentFirstMsg();
 
@@ -16,7 +16,7 @@ namespace _1dv607_W2
             {
                 string inputName = view.GetName();
                 string inputPersonalNum = view.GetPersonalNumber();
-                member.Create(inputName, inputPersonalNum);
+                registry.saveMember(new Member(inputName, inputPersonalNum));
                 view.PresentFirstMsg();
                 return true;
             }

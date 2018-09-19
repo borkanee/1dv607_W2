@@ -11,9 +11,7 @@ namespace _1dv607_W2
         private string _name;
         private string _personalNumber;
 
-        private List<Boat> intList = new List<Boat>();
-
-        private XmlDocument _doc = new XmlDocument();
+        private List<Boat> _boats = new List<Boat>();
 
         public string Name
         {
@@ -40,36 +38,10 @@ namespace _1dv607_W2
             }
         }
 
-        public Member()
-        {
-            _id = _doc.SelectNodes("//memberRegistry/member").Count + 1;
-        }
-
-        public void Create(string inputName, string inputPersonalNumber)
+        public Member(string inputName, string inputPersonalNumber)
         {
             Name = inputName;
             PersonalNumber = inputPersonalNumber;
-
-            WriteToXml();
-        }
-
-        private void WriteToXml()
-        {
-            _doc.Load(@"./members.xml");
-
-            XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
-
-
-                // GLÖM EJ!: Iterera alla ID:n, ta ut största talet, + 1
-
-            XmlElement member = _doc.CreateElement("member");
-            member.SetAttribute("id", _id.ToString());
-            member.SetAttribute("name", _name);
-            member.SetAttribute("personalNumber", _personalNumber);
-
-            memberRegistry.AppendChild(member);
-
-            _doc.Save(@"./members.xml");
         }
     }
 }
