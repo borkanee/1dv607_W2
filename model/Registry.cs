@@ -5,6 +5,7 @@ namespace _1dv607_W2
 {
     class Registry
     {
+        
 
         // TESTING XML...
         public static void getCompactList()

@@ -1,6 +1,7 @@
 using System;
 using System.Xml;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace _1dv607_W2
 {
@@ -9,6 +10,8 @@ namespace _1dv607_W2
         private readonly int _id;
         private string _name;
         private string _personalNumber;
+
+        private List<Boat> intList = new List<Boat>();
 
         private XmlDocument _doc = new XmlDocument();
 
@@ -19,7 +22,7 @@ namespace _1dv607_W2
             {
                 if (value.Length > 15 || value.Length < 2)
                 {
-                    throw new ArgumentOutOfRangeException("Name is to long or to short");
+                    throw new ArgumentOutOfRangeException("Name is too long or too short");
                 }
                 _name = value;
             }
@@ -57,7 +60,7 @@ namespace _1dv607_W2
             XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
 
 
-            // GLÖM EJ!: Iterera alla ID:n, ta ut största talet, + 1
+                // GLÖM EJ!: Iterera alla ID:n, ta ut största talet, + 1
 
             XmlElement member = _doc.CreateElement("member");
             member.SetAttribute("id", _id.ToString());
