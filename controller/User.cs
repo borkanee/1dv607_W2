@@ -27,7 +27,7 @@ namespace _1dv607_W2
             {
                 List<string> compactList = registry.getCompactList();
                 Console.Write(compactList);
-                view.PresentCompactList(compactList);
+                string id = view.PresentCompactList(compactList);
                 return true;
             }
 
