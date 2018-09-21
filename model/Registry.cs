@@ -23,18 +23,13 @@ namespace _1dv607_W2
                 int id = int.Parse(memberNode.Attributes["id"].Value);
                 string name = memberNode.Attributes["name"].Value;
                 string pNumber = memberNode.Attributes["personalNumber"].Value;
-                Console.WriteLine(id + " " + name + " " + pNumber);
-                //memberNode.Attributes["age"].Value = (age + 1).ToString();
-                // _members.Add(new Member());
                 int numberOfBoats = 0;
-                foreach(XmlNode child in memberNode.ChildNodes)
-                {
-                    numberOfBoats += 1;
-                }
-                list.Add(name + " " + id + " " + numberOfBoats);
-                // RETURNERA LISTA TILL CONTROLLER? Kopia? KURS 1dv024?
+                //foreach(XmlNode child in memberNode.ChildNodes)
+                //{
+                //    numberOfBoats += 1;
+                //}
+                list.Add(name + " " + id);
             }
-            //doc.Save(@"./members.xml");
             return list;
         }
         public void saveMember(Member member)

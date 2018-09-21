@@ -26,7 +26,8 @@ namespace _1dv607_W2
             if (e == ConsoleView.Event.List)
             {
                 List<string> compactList = registry.getCompactList();
-                view.PresentCompactList();
+                Console.Write(compactList);
+                view.PresentCompactList(compactList);
                 return true;
             }
 

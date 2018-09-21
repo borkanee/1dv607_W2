@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace _1dv607_W2
 {
@@ -23,10 +24,22 @@ namespace _1dv607_W2
             Console.WriteLine("To get a verbose list: press v");
         }
 
-        public void PresentCompactList()
+        public string PresentCompactList(List<string> list)
         {
+            string selectedMember = "";
             Console.Clear();
-            Console.WriteLine("Compact list");
+            Console.WriteLine("Compact list:");
+            foreach(string item in list) 
+            {
+                Console.WriteLine(item.ToString());
+            }
+
+            Console.WriteLine("");
+            Console.WriteLine("To manage a member write member id");
+            Console.WriteLine("");
+
+            selectedMember = Console.ReadLine();
+            return selectedMember;
         }
 
         public string GetPersonalNumber()
