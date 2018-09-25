@@ -5,14 +5,19 @@ using System.Collections.Generic;
 
 namespace _1dv607_W2
 {
-    class Member
+    public class Member
     {
-        private readonly int _id;
+        public int _id;
         private string _name;
         private string _personalNumber;
 
         private List<Boat> _boats = new List<Boat>();
 
+        public List<Boat> Boats
+        {
+            get { return _boats; }
+            set { _boats = value; }
+        }
         public string Name
         {
             get { return _name; }
@@ -38,10 +43,12 @@ namespace _1dv607_W2
             }
         }
 
-        public Member(string inputName, string inputPersonalNumber)
+        public Member(string inputName, string inputPersonalNumber, int id, List<Boat> boats)
         {
             Name = inputName;
             PersonalNumber = inputPersonalNumber;
+            _id = id;
+            _boats = boats;
         }
     }
 }

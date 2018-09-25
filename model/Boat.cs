@@ -2,18 +2,18 @@ using System;
 
 namespace _1dv607_W2
 {
-    class Boat
+    public class Boat
     {
-        private readonly int _id;
+        // private readonly int _id;
         private int _length;
 
-        public BoatType Type;
+        public string Type;
 
-        public int Id
-        {
-            get { return _id; }
-        }
-
+        /* public int Id
+         {
+             get { return _id; }
+         }
+ */
         public int Length
         {
             get { return _length; }
@@ -28,7 +28,7 @@ namespace _1dv607_W2
         }
 
 
-        public Boat(BoatType type, int length)
+        public Boat(string type, int length)
         {
             //_id = ?
             // Boat måste i så fall känna till senaste båt-ID:t?? Create-pattern?

@@ -1,25 +1,32 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace _1dv607_W2
 {
-    class Registry
+    public class Registry
     {
         private XmlDocument _doc = new XmlDocument();
-        private List<Member> _members = new List<Member>();
+
+        public Member GetMemberInfo(int memberId)
+        {
+            // TODO: om inget id, returnera felmedd...
+            return GetMembers().Where(memer => memer._id == memberId).Last();
+        }
+
+        //private List<Member> _members;
+
+        // private int _idCounter = 0;
 
         // TESTING XML...
-        public void getCompactList()
+        /* public List<string> getCompactList()
         {
 
-            // Varför hämta och spara allt för varenda operation?
-            // Så länge programmet körs kommer ändrad data finnas i minnet?
-
-            GetMembers();
             _doc.Load(@"./members.xml");
             string xmlcontents = _doc.InnerXml;
-            Console.WriteLine(xmlcontents);
+            List<string> list = new List<string>();
 
             XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
             foreach (XmlNode memberNode in memberNodes)
@@ -30,26 +37,21 @@ namespace _1dv607_W2
                 Console.WriteLine(id + " " + name + " " + pNumber);
                 //memberNode.Attributes["age"].Value = (age + 1).ToString();
                 // _members.Add(new Member());
-
+                int numberOfBoats = 0;
+                foreach (XmlNode child in memberNode.ChildNodes)
+                {
+                    numberOfBoats += 1;
+                }
+                list.Add(name + " " + id + " " + numberOfBoats);
                 // RETURNERA LISTA TILL CONTROLLER? Kopia? KURS 1dv024?
             }
             //doc.Save(@"./members.xml");
+            return list;
         }
-
-        public IEnumerable<Member> GetVerboseList()
+*/
+        public void AddMember(string inputName, string inputPersonalNum)
         {
-            for (int i = 0; i < 10; i++)
-            {
-                _members.Add(new Member("Hejhej", "9191919191"));
-            }
-            return _members;
-        }
-
-        public void SaveMember(Member member)
-        {
-            // GLÖM EJ!: Iterera alla ID:n, ta ut största talet, + 1
-
-            int id = _doc.SelectNodes("//memberRegistry/member").Count + 1;
+            int id = getMemberId();
 
             _doc.Load(@"./members.xml");
 
@@ -57,40 +59,45 @@ namespace _1dv607_W2
 
             XmlElement xmlMember = _doc.CreateElement("member");
             xmlMember.SetAttribute("id", id.ToString());
-            xmlMember.SetAttribute("name", member.Name);
-            xmlMember.SetAttribute("personalNumber", member.PersonalNumber);
+            xmlMember.SetAttribute("name", inputName);
+            xmlMember.SetAttribute("personalNumber", inputPersonalNum);
 
             memberRegistry.AppendChild(xmlMember);
 
             _doc.Save(@"./members.xml");
         }
-        private List<Member> GetMembers()
-        {
-            // returnera lista med medlemmar som innehåller all info
-            // iterera alla medlemmar i xml, plocka ut info och skapa nya medlemmar,
-            // populera listan med medlemmar och båtar
 
-            return new List<Member>();
+        private int getMemberId()
+        {
+            _doc.Load(@"./members.xml");
+            XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
+            var id = int.Parse(memberRegistry.LastChild.Attributes["id"].Value);
+            return id + 1;
         }
-        public void WriteToXml()
+        public List<Member> GetMembers()
         {
-            /*
+            _doc.Load(@"./members.xml");
+            string xmlcontents = _doc.InnerXml;
+            List<Member> members = new List<Member>();
 
-             int id = _doc.SelectNodes("//memberRegistry/member").Count + 1;
+            XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
+            foreach (XmlNode memberNode in memberNodes)
+            {
+                List<Boat> boats = new List<Boat>();
+                int id = int.Parse(memberNode.Attributes["id"].Value);
+                string name = memberNode.Attributes["name"].Value;
+                string pNumber = memberNode.Attributes["personalNumber"].Value;
 
-             _doc.Load(@"./members.xml");
+                foreach (XmlNode boat in memberNode.ChildNodes)
+                {
+                    string type = boat.Attributes["type"].Value;
+                    int length = int.Parse(boat.Attributes["length"].Value);
+                    boats.Add(new Boat(type, length));
+                }
 
-             XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
-
-             XmlElement xmlMember = _doc.CreateElement("member");
-             xmlMember.SetAttribute("id", id.ToString());
-             xmlMember.SetAttribute("name", member.Name);
-             xmlMember.SetAttribute("personalNumber", member.PersonalNumber);
-
-             memberRegistry.AppendChild(xmlMember);
-
-             _doc.Save(@"./members.xml");
-             */
+                members.Add(new Member(name, pNumber, id, boats));
+            }
+            return members;
         }
     }
 }

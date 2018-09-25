@@ -1,9 +1,13 @@
 <?xml version="1.0"?>
 <memberRegistry>
   <member id="1" name="Isaac Asimov" personalNumber="9191919292">
-    <boat id="1" type="Canoe" length="7"/>
+    <boat id="1" type="Canoe" length="7" />
   </member>
-    <member id="2" name="Jakob" personalNumber="9191919293">
-    <boat id="2" type="Other" length="10"/>
+  <member id="2" name="Jakob" personalNumber="9191919293">
+    <boat id="2" type="Other" length="10" />
   </member>
+  <member id="3" name="Newtest" personalNumber="9191919483" />
+  <member id="4" name="asdasd" personalNumber="9191919191" />
+  <member id="5" name="asdasdasd" personalNumber="9294949393" />
+  <member id="6" name="asdasdasd" personalNumber="2323232323" />
 </memberRegistry>

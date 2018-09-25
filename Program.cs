@@ -12,7 +12,7 @@ namespace _1dv607_W2
                 User user = new User();
                 Registry registry = new Registry();
 
-                while (user.ManageMember(view, registry)) ;
+                while (user.ManageMember(view, registry));
             }
 
             catch (ArgumentOutOfRangeException ex)
