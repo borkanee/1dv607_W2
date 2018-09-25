@@ -25,6 +25,7 @@ namespace _1dv607_W2
             //TO GET A COMPACT LIST
             if (e == ConsoleView.Event.List)
             {
+<<<<<<< HEAD
                 List<Member> members = registry.GetMembers();
                 view.PresentCompactList(members);
 
@@ -32,6 +33,11 @@ namespace _1dv607_W2
                 Member member = registry.GetMemberInfo(memberId);
                 view.PresentMemberInfo(member);
 
+=======
+                List<string> compactList = registry.getCompactList();
+                Console.Write(compactList);
+                string id = view.PresentCompactList(compactList);
+>>>>>>> e56b26e6766786ee59be4417c72439846f090537
                 return true;
             }
 

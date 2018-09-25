@@ -13,42 +13,12 @@ namespace _1dv607_W2
         public Member GetMemberInfo(int memberId)
         {
             // TODO: om inget id, returnera felmedd...
-            return GetMembers().Where(memer => memer._id == memberId).Last();
+            return GetMembers().Where(member => member._id == memberId).Last();
         }
 
         //private List<Member> _members;
 
         // private int _idCounter = 0;
-
-        // TESTING XML...
-        /* public List<string> getCompactList()
-        {
-
-            _doc.Load(@"./members.xml");
-            string xmlcontents = _doc.InnerXml;
-            List<string> list = new List<string>();
-
-            XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
-            foreach (XmlNode memberNode in memberNodes)
-            {
-                int id = int.Parse(memberNode.Attributes["id"].Value);
-                string name = memberNode.Attributes["name"].Value;
-                string pNumber = memberNode.Attributes["personalNumber"].Value;
-                Console.WriteLine(id + " " + name + " " + pNumber);
-                //memberNode.Attributes["age"].Value = (age + 1).ToString();
-                // _members.Add(new Member());
-                int numberOfBoats = 0;
-                foreach (XmlNode child in memberNode.ChildNodes)
-                {
-                    numberOfBoats += 1;
-                }
-                list.Add(name + " " + id + " " + numberOfBoats);
-                // RETURNERA LISTA TILL CONTROLLER? Kopia? KURS 1dv024?
-            }
-            //doc.Save(@"./members.xml");
-            return list;
-        }
-*/
         public void AddMember(string inputName, string inputPersonalNum)
         {
             int id = getMemberId();
