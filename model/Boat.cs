@@ -4,16 +4,23 @@ namespace _1dv607_W2
 {
     public class Boat
     {
-        // private readonly int _id;
         private int _length;
 
-        public string Type;
+        private string _type;
 
-        /* public int Id
-         {
-             get { return _id; }
-         }
- */
+        public string Type
+        {
+            get { return _type; }
+            set
+            {
+                if (value.Length > 10)
+                {
+                    throw new ArgumentOutOfRangeException("Boat type is too long");
+                }
+                _type = value;
+            }
+        }
+
         public int Length
         {
             get { return _length; }
@@ -30,8 +37,6 @@ namespace _1dv607_W2
 
         public Boat(string type, int length)
         {
-            //_id = ?
-            // Boat måste i så fall känna till senaste båt-ID:t?? Create-pattern?
             Type = type;
             Length = length;
         }

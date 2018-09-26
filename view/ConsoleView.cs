@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace _1dv607_W2
 {
@@ -29,28 +30,34 @@ namespace _1dv607_W2
             Console.WriteLine("To get a verbose list: press v");
         }
 
-        public void PresentCompactList(List<Member> members)
+        public void PresentCompactList(ReadOnlyCollection<Member> members)
         {
             //Console.Clear();
             Console.WriteLine();
             Console.WriteLine("Enter member id for member information, to return press m");
             Console.WriteLine("Compact list:");
-            members.ForEach(member =>
+            foreach (Member member in members)
             {
-                Console.WriteLine($"Name: {member.Name}, Id: {member._id}, Number of boats: {member.Boats.Count}");
-            });
+                Console.WriteLine($"Name: {member.Name}, Id: {member.Id}, Number of boats: {member.Boats.Count}");
+            };
 
 
         }
 
         public void PresentMemberInfo(Member member)
         {
-            Console.WriteLine($"Name: {member.Name} Id: {member._id} Personal number: {member.PersonalNumber} Number of boats: {member.Boats.Count}");
-            member.Boats.ForEach(boat =>
+            Console.WriteLine($@"
+- - - - - - - - - - - - - - - -
+Id: {member.Id}
+Name: {member.Name}
+Personal number: {member.PersonalNumber} 
+Number of boats: {member.Boats.Count}");
+
+            foreach (Boat boat in member.Boats)
             {
                 Console.WriteLine($"Boat type: {boat.Type}, Boat length: {boat.Length}");
-            });
-
+            };
+            Console.WriteLine("- - - - - - - - - - - - - - - -");
         }
 
         public string GetId()
@@ -58,20 +65,22 @@ namespace _1dv607_W2
             return Console.ReadLine();
         }
 
-        public void PresentVerboseList(List<Member> members)
+        public void PresentVerboseList(ReadOnlyCollection<Member> members)
         {
             //Console.Clear();
             Console.WriteLine();
             Console.WriteLine("Enter member id for member information");
             Console.WriteLine("Verbose list:");
-            members.ForEach(member =>
+            foreach (Member member in members)
             {
-                Console.WriteLine($"Name: {member.Name}, Id: {member._id}, Personal number: {member.PersonalNumber}");
-                member.Boats.ForEach(boat =>
                 {
-                    Console.WriteLine($"Boat type: {boat.Type}, Boat length: {boat.Length}");
-                });
-            });
+                    Console.WriteLine($"Name: {member.Name}, Id: {member.Id}, Personal number: {member.PersonalNumber}");
+                    foreach (Boat boat in member.Boats)
+                    {
+                        Console.WriteLine($"Boat type: {boat.Type}, Boat length: {boat.Length}");
+                    };
+                };
+            }
         }
 
         public string GetPersonalNumber()

@@ -2,21 +2,19 @@ using System;
 using System.Xml;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace _1dv607_W2
 {
     public class Member
     {
-        public int _id;
+        public int Id { get; }
         private string _name;
         private string _personalNumber;
-
-        private List<Boat> _boats = new List<Boat>();
-
-        public List<Boat> Boats
+        private List<Boat> _boats;
+        public ReadOnlyCollection<Boat> Boats
         {
-            get { return _boats; }
-            set { _boats = value; }
+            get { return _boats.AsReadOnly(); }
         }
         public string Name
         {
@@ -42,12 +40,11 @@ namespace _1dv607_W2
                 _personalNumber = value;
             }
         }
-
         public Member(string inputName, string inputPersonalNumber, int id, List<Boat> boats)
         {
             Name = inputName;
             PersonalNumber = inputPersonalNumber;
-            _id = id;
+            Id = id;
             _boats = boats;
         }
     }

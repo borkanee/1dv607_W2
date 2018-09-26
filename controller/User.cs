@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace _1dv607_W2
 {
@@ -25,7 +26,7 @@ namespace _1dv607_W2
             //TO GET A COMPACT LIST
             if (e == ConsoleView.Event.List)
             {
-                List<Member> members = registry.GetMembers();
+                ReadOnlyCollection<Member> members = registry.GetMembers();
                 view.PresentCompactList(members);
 
                 int memberId = int.Parse(view.GetId());
@@ -38,7 +39,7 @@ namespace _1dv607_W2
             //TO GET A VERBOSE LIST
             if (e == ConsoleView.Event.VerboseList)
             {
-                List<Member> members = registry.GetMembers();
+                ReadOnlyCollection<Member> members = registry.GetMembers();
                 view.PresentVerboseList(members);
                 return true;
             }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
@@ -8,22 +9,25 @@ namespace _1dv607_W2
 {
     public class Registry
     {
-        private XmlDocument _doc = new XmlDocument();
+        private XmlDocument _doc;
+
+        public Registry()
+        {
+            _doc = new XmlDocument();
+            _doc.Load(@"./members.xml");
+        }
 
         public Member GetMemberInfo(int memberId)
         {
             // TODO: om inget id, returnera felmedd...
-            return GetMembers().Where(member => member._id == memberId).Last();
+            return GetMembers().Where(member => member.Id == memberId).Last();
         }
 
         //private List<Member> _members;
 
-        // private int _idCounter = 0;
         public void AddMember(string inputName, string inputPersonalNum)
         {
             int id = getMemberId();
-
-            _doc.Load(@"./members.xml");
 
             XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
 
@@ -39,14 +43,12 @@ namespace _1dv607_W2
 
         private int getMemberId()
         {
-            _doc.Load(@"./members.xml");
             XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
             var id = int.Parse(memberRegistry.LastChild.Attributes["id"].Value);
             return id + 1;
         }
-        public List<Member> GetMembers()
+        public ReadOnlyCollection<Member> GetMembers()
         {
-            _doc.Load(@"./members.xml");
             string xmlcontents = _doc.InnerXml;
             List<Member> members = new List<Member>();
 
@@ -67,7 +69,7 @@ namespace _1dv607_W2
 
                 members.Add(new Member(name, pNumber, id, boats));
             }
-            return members;
+            return members.AsReadOnly();
         }
     }
 }
