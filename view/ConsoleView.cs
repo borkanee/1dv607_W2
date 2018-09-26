@@ -130,6 +130,22 @@ To return to main menu enter any other key.
             return num;
         }
 
+        public int GetId(ReadOnlyCollection<Boat> boats)
+        {
+            Console.Write("Enter the id: ");
+            int num;
+            bool isInt = int.TryParse(Console.ReadLine(), out num);
+            bool validId = boats.Count(boat => boat.Id == num) != 0;
+
+            while (!(isInt && validId))
+            {
+                Console.WriteLine("Please enter a valid id: ");
+                isInt = int.TryParse(Console.ReadLine(), out num);
+                validId = boats.Count(boat => boat.Id == num) != 0;
+            }
+            return num;
+        }
+
         public void PresentVerboseList(ReadOnlyCollection<Member> members)
         {
             Console.Clear();

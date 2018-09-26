@@ -67,7 +67,7 @@ namespace _1dv607_W2
 
                         if (e == ConsoleView.Event.EnterId)
                         {
-                            int boatId = view.GetId(members);
+                            int boatId = view.GetId(member.Boats);
 
                             foreach (Boat boat in member.Boats)
                             {
