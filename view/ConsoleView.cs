@@ -119,16 +119,15 @@ To return to main menu enter any other key.
             Console.Write("Enter the id: ");
             int num;
             bool isInt = int.TryParse(Console.ReadLine(), out num);
-            bool validId = members.Where(member => member.Id == num).ToList().Count != 0;
+            bool validId = members.Count(member => member.Id == num) != 0;
 
             while (!(isInt && validId))
             {
-                Console.Write("Please enter a valid id: ");
+                Console.WriteLine("Please enter a valid id: ");
                 isInt = int.TryParse(Console.ReadLine(), out num);
-                validId = members.Where(member => member.Id == num).ToList().Count != 0;
+                validId = members.Count(member => member.Id == num) != 0;
             }
             return num;
-
         }
 
         public void PresentVerboseList(ReadOnlyCollection<Member> members)
