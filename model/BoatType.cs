@@ -1,7 +1,7 @@
 public enum BoatType {
-    Sailboat,
-    Motorsailer,
-    Kayak,
-    Other
+    Sailboat = 1,
+    Motorsailer = 2,
+    Kayak = 3,
+    Other = 4
 
 }

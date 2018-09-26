@@ -6,19 +6,12 @@ namespace _1dv607_W2
     {
         private int _length;
 
-        private string _type;
+        private BoatType _type;
 
-        public string Type
+        public int Id { get; }
+        public BoatType Type
         {
             get { return _type; }
-            set
-            {
-                if (value.Length > 10)
-                {
-                    throw new ArgumentOutOfRangeException("Boat type is too long");
-                }
-                _type = value;
-            }
         }
 
         public int Length
@@ -35,10 +28,11 @@ namespace _1dv607_W2
         }
 
 
-        public Boat(string type, int length)
+        public Boat(BoatType type, int length, int boatId)
         {
-            Type = type;
+            _type = type;
             Length = length;
+            Id = boatId;
         }
     }
 }

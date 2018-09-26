@@ -24,36 +24,75 @@ namespace _1dv607_W2
             }
 
             //TO GET A COMPACT LIST
-            if (e == ConsoleView.Event.List)
+            if (e == ConsoleView.Event.List || e == ConsoleView.Event.VerboseList)
             {
                 ReadOnlyCollection<Member> members = registry.GetMembers();
-                view.PresentCompactList(members);
+                if (e == ConsoleView.Event.List)
+                {
+                    view.PresentCompactList(members);
+                }
+                if (e == ConsoleView.Event.VerboseList)
+                {
+                    view.PresentVerboseList(members);
+                }
 
-                int memberId = int.Parse(view.GetId());
-                Member member = registry.GetMemberInfo(memberId);
-                view.PresentMemberInfo(member);
+                e = view.GetEvent();
 
+                if (e == ConsoleView.Event.EnterId)
+                {
+                    int memberId = view.GetId(members);
+                    Member member = registry.GetMemberInfo(memberId);
+                    view.PresentMemberInfo(member);
+
+                    e = view.GetEvent();
+
+                    if (e == ConsoleView.Event.MemberChange) {
+                        string inputName = view.GetName();
+                        string inputPersonalNum = view.GetPersonalNumber();
+                        registry.ChangeMember(memberId, inputName, inputPersonalNum);
+
+                    }
+                    if (e == ConsoleView.Event.DeleteMember) {
+                        registry.DeleteMember(memberId);
+                    }
+                    if (e == ConsoleView.Event.NewBoat) {
+                        view.PresentBoatTypes();
+                        BoatType boatType = view.GetBoatType();
+                        int boatLength = view.GetBoatLength();
+                        registry.AddBoat(memberId, boatType, boatLength);
+                    }
+                    if (e == ConsoleView.Event.ListBoats) {
+                        view.PresentBoats(member.Boats);
+                        e = view.GetEvent();
+
+                        if (e == ConsoleView.Event.EnterId)
+                        {
+                            int boatId = view.GetId(members);
+
+                            foreach (Boat boat in member.Boats)
+                            {
+                                if (boat.Id == boatId)
+                                {
+                                    view.PresentBoat(boat);
+                                }
+                            }
+                            e = view.GetEvent();
+                            if (e == ConsoleView.Event.BoatInformation)
+                            {
+                                view.PresentBoatTypes();
+                                BoatType boatType = view.GetBoatType();
+                                int boatLength = view.GetBoatLength();
+                                registry.ChangeBoat(boatId, boatType, boatLength);
+                            }
+                            if (e == ConsoleView.Event.DeleteBoat)
+                            {
+                                registry.DeleteBoat(boatId);
+                            }
+                        }
+                    }
+                }
+                
                 return true;
-            }
-
-            //TO GET A VERBOSE LIST
-            if (e == ConsoleView.Event.VerboseList)
-            {
-                ReadOnlyCollection<Member> members = registry.GetMembers();
-                view.PresentVerboseList(members);
-                return true;
-            }
-
-            //TO VIEW MEMBER INFO
-            if (e == ConsoleView.Event.MemberInfo)
-            {
-                // TODO:...
-            }
-
-            //TO DELETE A MEMBER
-            if (e == ConsoleView.Event.DeleteMember)
-            {
-                // TODO:...
             }
 
             //TO EXIT PROGRAM
@@ -62,7 +101,7 @@ namespace _1dv607_W2
                 return false;
             }
             //OR ELSE
-            return false;
+            return true;
         }
     }
 }

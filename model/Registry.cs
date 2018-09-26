@@ -49,7 +49,7 @@ namespace _1dv607_W2
         }
         public ReadOnlyCollection<Member> GetMembers()
         {
-            string xmlcontents = _doc.InnerXml;
+            // string xmlcontents = _doc.InnerXml;
             List<Member> members = new List<Member>();
 
             XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
@@ -62,14 +62,99 @@ namespace _1dv607_W2
 
                 foreach (XmlNode boat in memberNode.ChildNodes)
                 {
-                    string type = boat.Attributes["type"].Value;
+                    string typeString = boat.Attributes["type"].Value;
+                    BoatType boatType = (BoatType) Enum.Parse(typeof(BoatType), typeString);
+                    // Console.WriteLine(boatType);
                     int length = int.Parse(boat.Attributes["length"].Value);
-                    boats.Add(new Boat(type, length));
+                    int boatId = int.Parse(boat.Attributes["id"].Value);
+                    boats.Add(new Boat(boatType, length, boatId));
                 }
 
                 members.Add(new Member(name, pNumber, id, boats));
             }
             return members.AsReadOnly();
+        }
+
+        public void ChangeMember(int newId, string newName, string newPersonalNumber)
+        {
+            // string xmlcontents = _doc.InnerXml;
+
+            XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
+            foreach (XmlNode memberNode in memberNodes)
+            {
+                if (int.Parse(memberNode.Attributes["id"].Value) == newId) {
+                    memberNode.Attributes["name"].Value = newName;
+                    memberNode.Attributes["personalNumber"].Value = newPersonalNumber;
+                }
+            }
+            _doc.Save(@"./members.xml");
+
+        }
+        public void DeleteMember(int memberId)
+        {
+            XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
+            foreach (XmlNode memberNode in memberNodes)
+            {
+                if (int.Parse(memberNode.Attributes["id"].Value) == memberId) {
+                    memberNode.ParentNode.RemoveChild(memberNode);
+                }
+            }
+            _doc.Save(@"./members.xml");
+
+        }
+
+        public void AddBoat(int memberId, BoatType boatType, int boatLength)
+        {
+            int boatId = getBoatId();
+
+            XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
+
+            XmlElement xmlBoat = _doc.CreateElement("boat");
+            xmlBoat.SetAttribute("id", boatId.ToString());
+            xmlBoat.SetAttribute("type", boatType.ToString());
+            xmlBoat.SetAttribute("length", boatLength.ToString());
+
+            foreach (XmlNode memberNode in memberNodes)
+            {
+                if (int.Parse(memberNode.Attributes["id"].Value) == memberId) {
+                    memberNode.AppendChild(xmlBoat);
+                }
+            }
+            _doc.Save(@"./members.xml");
+        }
+
+        private int getBoatId()
+        {
+            var maxId = _doc.SelectNodes("//member/boat")
+              .Cast<XmlElement>()
+              .Max(boat => Int32.Parse(boat.Attributes["id"].Value));
+            return maxId + 1;
+        }
+
+        public void DeleteBoat(int boatId)
+        {
+            XmlNodeList boatNodes = _doc.SelectNodes("//member/boat");
+            foreach (XmlNode boatNode in boatNodes)
+            {
+                if (int.Parse(boatNode.Attributes["id"].Value) == boatId) {
+                    boatNode.ParentNode.RemoveChild(boatNode);
+                }
+            }
+            _doc.Save(@"./members.xml");
+        }
+
+        public void ChangeBoat(int boatId, BoatType boatType, int boatLength)
+        {
+            XmlNodeList boatNodes = _doc.SelectNodes("//member/boat");
+            foreach (XmlNode boatNode in boatNodes)
+            {
+                if (int.Parse(boatNode.Attributes["id"].Value) == boatId) {
+                    boatNode.Attributes["type"].Value = boatType.ToString();
+                    boatNode.Attributes["length"].Value = boatLength.ToString();
+                }
+            }
+            _doc.Save(@"./members.xml");
+
         }
     }
 }
