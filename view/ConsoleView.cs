@@ -19,8 +19,8 @@ namespace _1dv607_W2
             NewBoat,
             ListBoats,
             MemberChange,
-            DeleteBoat, 
-            BoatInformation, 
+            DeleteBoat,
+            BoatInformation,
             EnterId,
             None,
 
@@ -89,7 +89,7 @@ To return to main menu enter any other key.
             Console.Clear();
             int counter = 1;
             var values = Enum.GetValues(typeof(BoatType));
-            foreach (var value in values) 
+            foreach (var value in values)
             {
                 Console.WriteLine(counter.ToString() + " " + value);
                 counter++;
@@ -105,29 +105,30 @@ To return to main menu enter any other key.
             return type;
         }
 
-        public int GetBoatLength() {
+        public int GetBoatLength()
+        {
             Console.Clear();
             Console.WriteLine("Enter the length of your boat:");
             int length = int.Parse(Console.ReadLine());
-        
+
             return length;
         }
 
         public int GetId(ReadOnlyCollection<Member> members)
-        {    
-
-            int num = 0;
-
-            bool idNotValid = members.Where( member => member.Id == num).ToList().Count == 0;
-
+        {
+            Console.Write("Enter the id: ");
+            int num;
             bool isInt = int.TryParse(Console.ReadLine(), out num);
-            while (!isInt && idNotValid)
+            bool validId = members.Where(member => member.Id == num).ToList().Count != 0;
+
+            while (!(isInt && validId))
             {
-                Console.Clear();
-                Console.Write("Enter the id: ");
+                Console.Write("Please enter a valid id: ");
                 isInt = int.TryParse(Console.ReadLine(), out num);
+                validId = members.Where(member => member.Id == num).ToList().Count != 0;
             }
             return num;
+
         }
 
         public void PresentVerboseList(ReadOnlyCollection<Member> members)
