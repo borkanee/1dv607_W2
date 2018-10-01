@@ -25,7 +25,7 @@ namespace _1dv607_W2
 
         //private List<Member> _members;
 
-        public void AddMember(string inputName, string inputPersonalNum)
+        public void AddMember(string inputName, int inputPersonalNum)
         {
             int id = getMemberId();
 
@@ -34,7 +34,7 @@ namespace _1dv607_W2
             XmlElement xmlMember = _doc.CreateElement("member");
             xmlMember.SetAttribute("id", id.ToString());
             xmlMember.SetAttribute("name", inputName);
-            xmlMember.SetAttribute("personalNumber", inputPersonalNum);
+            xmlMember.SetAttribute("personalNumber", inputPersonalNum.ToString());
 
             memberRegistry.AppendChild(xmlMember);
 
@@ -75,7 +75,7 @@ namespace _1dv607_W2
             return members.AsReadOnly();
         }
 
-        public void ChangeMember(int newId, string newName, string newPersonalNumber)
+        public void ChangeMember(int newId, string newName, int newPersonalNumber)
         {
             // string xmlcontents = _doc.InnerXml;
 
@@ -84,7 +84,7 @@ namespace _1dv607_W2
             {
                 if (int.Parse(memberNode.Attributes["id"].Value) == newId) {
                     memberNode.Attributes["name"].Value = newName;
-                    memberNode.Attributes["personalNumber"].Value = newPersonalNumber;
+                    memberNode.Attributes["personalNumber"].Value = newPersonalNumber.ToString();
                 }
             }
             _doc.Save(@"./members.xml");

@@ -6,13 +6,10 @@
     <boat id="3" type="Motorsailer" length="5" />
   </member>
   <member id="3" name="Three" personalNumber="1234567890">
-    <boat id="4" type="Motorsailer" length="3" />
+    <boat id="4" type="Other" length="10" />
     <boat id="5" type="Other" length="15" />
     <boat id="6" type="Sailboat" length="6" />
-    <boat id="7" type="Sailboat" length="4" />
-  </member>
-  <member id="4" name="asdasd" personalNumber="9191919191">
-    <boat id="11" type="Kayak" length="3" />
+    <boat id="7" type="Kayak" length="15" />
   </member>
   <member id="5" name="asdasdasd" personalNumber="9294949393">
     <boat id="8" type="Sailboat" length="4" />
@@ -25,4 +22,6 @@
     <boat id="10" type="Sailboat" length="3" />
   </member>
   <member id="9" name="Frans" personalNumber="1234567890" />
+  <member id="10" name="Pär" personalNumber="1234567890" />
+  <member id="11" name="Niki" personalNumber="1234567890" />
 </memberRegistry>

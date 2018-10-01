@@ -17,7 +17,7 @@ namespace _1dv607_W2
             if (e == ConsoleView.Event.CreateMember)
             {
                 string inputName = view.GetName();
-                string inputPersonalNum = view.GetPersonalNumber();
+                int inputPersonalNum = view.GetPersonalNumber();
                 registry.AddMember(inputName, inputPersonalNum);
                 view.PresentFirstMsg();
                 return true;
@@ -48,7 +48,7 @@ namespace _1dv607_W2
 
                     if (e == ConsoleView.Event.MemberChange) {
                         string inputName = view.GetName();
-                        string inputPersonalNum = view.GetPersonalNumber();
+                        int inputPersonalNum = view.GetPersonalNumber();
                         registry.ChangeMember(memberId, inputName, inputPersonalNum);
 
                     }
