@@ -24,7 +24,7 @@ namespace _1dv607_W2
 
         public void AddMember(string inputName, int inputPersonalNum)
         {
-            int id = getMemberId();
+            int id = GetMemberId();
 
             XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
 
@@ -38,7 +38,7 @@ namespace _1dv607_W2
             _doc.Save(@"./members.xml");
         }
 
-        private int getMemberId()
+        private int GetMemberId()
         {
             XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
             var id = int.Parse(memberRegistry.LastChild.Attributes["id"].Value);

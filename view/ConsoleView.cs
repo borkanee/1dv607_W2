@@ -13,8 +13,6 @@ namespace _1dv607_W2
             List,
             Exit,
             VerboseList,
-            MemberInfo,
-            ShowMenu,
             DeleteMember,
             NewBoat,
             ListBoats,

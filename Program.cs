@@ -6,14 +6,15 @@ namespace _1dv607_W2
     {
         static void Main(string[] args)
         {
+            try
+            {
                 ConsoleView view = new ConsoleView();
                 User user = new User();
                 Registry registry = new Registry();
 
-                while (user.ManageMember(view, registry));
-            
-
-            /* catch (ArgumentOutOfRangeException ex)
+                while (user.ManageMember(view, registry)) ;
+            }
+            catch (ArgumentOutOfRangeException ex)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex.Message);
@@ -25,8 +26,6 @@ namespace _1dv607_W2
                 Console.WriteLine(ex.Message);
                 Console.ResetColor();
             }
-            */
-
         }
     }
 }
