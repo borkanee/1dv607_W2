@@ -19,11 +19,8 @@ namespace _1dv607_W2
 
         public Member GetMemberInfo(int memberId)
         {
-            // TODO: om inget id, returnera felmedd...
             return GetMembers().Where(member => member.Id == memberId).Last();
         }
-
-        //private List<Member> _members;
 
         public void AddMember(string inputName, int inputPersonalNum)
         {
@@ -49,7 +46,6 @@ namespace _1dv607_W2
         }
         public ReadOnlyCollection<Member> GetMembers()
         {
-            // string xmlcontents = _doc.InnerXml;
             List<Member> members = new List<Member>();
 
             XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
@@ -64,7 +60,6 @@ namespace _1dv607_W2
                 {
                     string typeString = boat.Attributes["type"].Value;
                     BoatType boatType = (BoatType) Enum.Parse(typeof(BoatType), typeString);
-                    // Console.WriteLine(boatType);
                     int length = int.Parse(boat.Attributes["length"].Value);
                     int boatId = int.Parse(boat.Attributes["id"].Value);
                     boats.Add(new Boat(boatType, length, boatId));
@@ -77,7 +72,6 @@ namespace _1dv607_W2
 
         public void ChangeMember(int newId, string newName, int newPersonalNumber)
         {
-            // string xmlcontents = _doc.InnerXml;
 
             XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
             foreach (XmlNode memberNode in memberNodes)

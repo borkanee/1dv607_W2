@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <memberRegistry>
-  <member id="1" name="Isaac Asimov" personalNumber="9191919292">
+  <member id="1" name="Pär" personalNumber="1234567890">
     <boat id="1" type="Kayak" length="7" />
     <boat id="2" type="Sailboat" length="12" />
     <boat id="3" type="Motorsailer" length="5" />
