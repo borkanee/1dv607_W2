@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace _1dv607_W2
 {
@@ -22,28 +21,6 @@ namespace _1dv607_W2
             return GetMembers().Where(member => member.Id == memberId).Last();
         }
 
-        public void AddMember(string inputName, int inputPersonalNum)
-        {
-            int id = GetMemberId();
-
-            XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
-
-            XmlElement xmlMember = _doc.CreateElement("member");
-            xmlMember.SetAttribute("id", id.ToString());
-            xmlMember.SetAttribute("name", inputName);
-            xmlMember.SetAttribute("personalNumber", inputPersonalNum.ToString());
-
-            memberRegistry.AppendChild(xmlMember);
-
-            _doc.Save(@"./members.xml");
-        }
-
-        private int GetMemberId()
-        {
-            XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
-            var id = int.Parse(memberRegistry.LastChild.Attributes["id"].Value);
-            return id + 1;
-        }
         public ReadOnlyCollection<Member> GetMembers()
         {
             List<Member> members = new List<Member>();
@@ -59,7 +36,7 @@ namespace _1dv607_W2
                 foreach (XmlNode boat in memberNode.ChildNodes)
                 {
                     string typeString = boat.Attributes["type"].Value;
-                    BoatType boatType = (BoatType) Enum.Parse(typeof(BoatType), typeString);
+                    BoatType boatType = (BoatType)Enum.Parse(typeof(BoatType), typeString);
                     int length = int.Parse(boat.Attributes["length"].Value);
                     int boatId = int.Parse(boat.Attributes["id"].Value);
                     boats.Add(new Boat(boatType, length, boatId));
@@ -70,26 +47,63 @@ namespace _1dv607_W2
             return members.AsReadOnly();
         }
 
-        public void ChangeMember(int newId, string newName, int newPersonalNumber)
+        public void AddMember(string inputName, string inputPersonalNum)
+        {
+            int id = GetMemberId();
+
+            XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
+
+            XmlElement xmlMember = _doc.CreateElement("member");
+            xmlMember.SetAttribute("id", id.ToString());
+            xmlMember.SetAttribute("name", inputName);
+            xmlMember.SetAttribute("personalNumber", inputPersonalNum);
+
+            memberRegistry.AppendChild(xmlMember);
+
+            _doc.Save(@"./members.xml");
+        }
+
+        private int GetMemberId()
+        {
+            int memberId;
+            XmlNodeList members = _doc.SelectNodes("//memberRegistry/member");
+            if (members.Count == 0)
+            {
+                memberId = 1;
+            }
+            else
+            {
+                memberId = members
+             .Cast<XmlElement>()
+             .Max(member => int.Parse(member.Attributes["id"].Value)) + 1;
+
+            }
+            return memberId;
+        }
+
+        public void ChangeMember(int newId, string newName, string newPersonalNumber)
         {
 
             XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
             foreach (XmlNode memberNode in memberNodes)
             {
-                if (int.Parse(memberNode.Attributes["id"].Value) == newId) {
+                if (int.Parse(memberNode.Attributes["id"].Value) == newId)
+                {
                     memberNode.Attributes["name"].Value = newName;
-                    memberNode.Attributes["personalNumber"].Value = newPersonalNumber.ToString();
+                    memberNode.Attributes["personalNumber"].Value = newPersonalNumber;
                 }
             }
             _doc.Save(@"./members.xml");
 
         }
+
         public void DeleteMember(int memberId)
         {
             XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
             foreach (XmlNode memberNode in memberNodes)
             {
-                if (int.Parse(memberNode.Attributes["id"].Value) == memberId) {
+                if (int.Parse(memberNode.Attributes["id"].Value) == memberId)
+                {
                     memberNode.ParentNode.RemoveChild(memberNode);
                 }
             }
@@ -110,7 +124,8 @@ namespace _1dv607_W2
 
             foreach (XmlNode memberNode in memberNodes)
             {
-                if (int.Parse(memberNode.Attributes["id"].Value) == memberId) {
+                if (int.Parse(memberNode.Attributes["id"].Value) == memberId)
+                {
                     memberNode.AppendChild(xmlBoat);
                 }
             }
@@ -119,10 +134,20 @@ namespace _1dv607_W2
 
         private int getBoatId()
         {
-            var maxId = _doc.SelectNodes("//member/boat")
-              .Cast<XmlElement>()
-              .Max(boat => Int32.Parse(boat.Attributes["id"].Value));
-            return maxId + 1;
+            int boatId;
+            XmlNodeList boats = _doc.SelectNodes("//member/boat");
+
+            if (boats.Count == 0)
+            {
+                boatId = 1;
+            }
+            else
+            {
+                boatId = boats
+                .Cast<XmlElement>()
+                .Max(boat => int.Parse(boat.Attributes["id"].Value)) + 1;
+            }
+            return boatId;
         }
 
         public void DeleteBoat(int boatId)
@@ -130,7 +155,8 @@ namespace _1dv607_W2
             XmlNodeList boatNodes = _doc.SelectNodes("//member/boat");
             foreach (XmlNode boatNode in boatNodes)
             {
-                if (int.Parse(boatNode.Attributes["id"].Value) == boatId) {
+                if (int.Parse(boatNode.Attributes["id"].Value) == boatId)
+                {
                     boatNode.ParentNode.RemoveChild(boatNode);
                 }
             }
@@ -142,7 +168,8 @@ namespace _1dv607_W2
             XmlNodeList boatNodes = _doc.SelectNodes("//member/boat");
             foreach (XmlNode boatNode in boatNodes)
             {
-                if (int.Parse(boatNode.Attributes["id"].Value) == boatId) {
+                if (int.Parse(boatNode.Attributes["id"].Value) == boatId)
+                {
                     boatNode.Attributes["type"].Value = boatType.ToString();
                     boatNode.Attributes["length"].Value = boatLength.ToString();
                 }

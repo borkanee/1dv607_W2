@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace _1dv607_W2
@@ -13,17 +11,17 @@ namespace _1dv607_W2
 
             e = view.GetEvent();
 
-            //TO CREATE A MEMBER
+            //CREATE A MEMBER
             if (e == ConsoleView.Event.CreateMember)
             {
                 string inputName = view.GetName();
-                int inputPersonalNum = view.GetPersonalNumber();
+                string inputPersonalNum = view.GetPersonalNumber();
                 registry.AddMember(inputName, inputPersonalNum);
                 view.PresentFirstMsg();
                 return true;
             }
 
-            //TO GET A COMPACT LIST
+            //SHOW LISTS
             if (e == ConsoleView.Event.List || e == ConsoleView.Event.VerboseList)
             {
                 ReadOnlyCollection<Member> members = registry.GetMembers();
@@ -48,7 +46,7 @@ namespace _1dv607_W2
 
                     if (e == ConsoleView.Event.MemberChange) {
                         string inputName = view.GetName();
-                        int inputPersonalNum = view.GetPersonalNumber();
+                        string inputPersonalNum = view.GetPersonalNumber();
                         registry.ChangeMember(memberId, inputName, inputPersonalNum);
 
                     }

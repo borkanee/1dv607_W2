@@ -1,12 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace _1dv607_W2
 {
     public class ConsoleView
     {
+        private int _empty = 0;
         public enum Event
         {
             CreateMember,
@@ -21,7 +22,6 @@ namespace _1dv607_W2
             BoatInformation,
             EnterId,
             None,
-
         }
 
         public void PresentFirstMsg()
@@ -53,7 +53,29 @@ COMPACT LIST:
 Do you want to view a specific member information write 'yes'.
 To return to main menu enter any other key.
 ");
+        }
 
+        public void PresentVerboseList(ReadOnlyCollection<Member> members)
+        {
+            Console.Clear();
+            Console.WriteLine($@"
+VERBOSE LIST:
+- - - - - - - - - - - - - - - -");
+            foreach (Member member in members)
+            {
+                {
+                    Console.WriteLine($"Name: {member.Name}, Id: {member.Id}, Personal number: {member.PersonalNumber}");
+                    foreach (Boat boat in member.Boats)
+                    {
+                        Console.WriteLine($"    Boat id: {boat.Id}, boat type: {boat.Type}, boat length: {boat.Length}");
+                    };
+                    Console.WriteLine("- - - - - - - - - - - - - - - -");
+                };
+            }
+            Console.WriteLine($@"
+Do you want to view a specific member information write 'yes'.
+To return to main menu enter any other key.
+");
         }
 
         public void PresentMemberInfo(Member member)
@@ -82,6 +104,48 @@ To return to main menu enter any other key.
 ");
         }
 
+        public void PresentBoats(ReadOnlyCollection<Boat> boats)
+        {
+            Console.Clear();
+            if (boats.Count == 0)
+            {
+                Console.WriteLine($@"
+THERE ARE NO BOATS
+- - - - - - - - - - - - - - - -
+Enter any other key to return to main menu.
+");
+            }
+            else
+            {
+                Console.WriteLine($@"
+BOATS:
+- - - - - - - - - - - - - - - -");
+                foreach (Boat boat in boats)
+                {
+                    Console.WriteLine($"Boat id: {boat.Id}, boat type: {boat.Type}, boat length: {boat.Length}");
+                };
+                Console.WriteLine($@"
+- - - - - - - - - - - - - - - -
+Do you want to manage a boat write 'yes'.
+Enter any other key to return to main menu.
+");
+            }
+
+        }
+
+        public void PresentBoat(Boat boat)
+        {
+            Console.Clear();
+            Console.WriteLine($@"
+BOAT:
+- - - - - - - - - - - - - - - -
+Boat id: {boat.Id}, boat type: {boat.Type}, boat length: {boat.Length}
+- - - - - - - - - - - - - - - -
+To delete boat write 'delete boat'.
+To change information about the boat write 'boat information'.
+");
+        }
+
         public void PresentBoatTypes()
         {
             Console.Clear();
@@ -93,8 +157,9 @@ To return to main menu enter any other key.
                 counter++;
             }
             Console.WriteLine("- - - - - - - - - - - - - - - -");
-            Console.WriteLine("Select a boat type by entering the number");
+            Console.Write("Select a boat type by entering the number: ");
         }
+
         public BoatType GetBoatType()
         {
             int num;
@@ -116,7 +181,7 @@ To return to main menu enter any other key.
 
         public int GetBoatLength()
         {
-            Console.WriteLine("Enter the length of your boat:");
+            Console.Write("Enter the length of your boat: ");
             int num;
 
             bool isInt = int.TryParse(Console.ReadLine(), out num);
@@ -137,13 +202,13 @@ To return to main menu enter any other key.
             Console.Write("Enter the id: ");
             int num;
             bool isInt = int.TryParse(Console.ReadLine(), out num);
-            bool validId = members.Count(member => member.Id == num) != 0;
+            bool validId = members.Count(member => member.Id == num) != _empty;
 
             while (!(isInt && validId))
             {
                 Console.Write("Please enter a valid id: ");
                 isInt = int.TryParse(Console.ReadLine(), out num);
-                validId = members.Count(member => member.Id == num) != 0;
+                validId = members.Count(member => member.Id == num) != _empty;
             }
             return num;
         }
@@ -153,56 +218,28 @@ To return to main menu enter any other key.
             Console.Write("Enter the id: ");
             int num;
             bool isInt = int.TryParse(Console.ReadLine(), out num);
-            bool validId = boats.Count(boat => boat.Id == num) != 0;
+            bool validId = boats.Count(boat => boat.Id == num) != _empty;
 
             while (!(isInt && validId))
             {
                 Console.Write("Please enter a valid id: ");
                 isInt = int.TryParse(Console.ReadLine(), out num);
-                validId = boats.Count(boat => boat.Id == num) != 0;
+                validId = boats.Count(boat => boat.Id == num) != _empty;
             }
             return num;
         }
 
-        public void PresentVerboseList(ReadOnlyCollection<Member> members)
+        public string GetPersonalNumber()
         {
-            Console.Clear();
-            Console.WriteLine($@"
-VERBOSE LIST:
-- - - - - - - - - - - - - - - -");
-            foreach (Member member in members)
+            Console.Write("Enter your personal number (YYMMDDNNNN): ");
+            string stringInput = Console.ReadLine();
+
+            while (!Regex.IsMatch(stringInput, @"[0-9]{2}(0[1-9]|(10|11|12))(0[1-9]|[1-2][0-9]|3[0-1])[0-9]{4}$"))
             {
-                {
-                    Console.WriteLine($"Name: {member.Name}, Id: {member.Id}, Personal number: {member.PersonalNumber}");
-                    foreach (Boat boat in member.Boats)
-                    {
-                        Console.WriteLine($"    Boat id: {boat.Id}, boat type: {boat.Type}, boat length: {boat.Length}");
-                    };
-                    Console.WriteLine("- - - - - - - - - - - - - - - -");
-                };
+                Console.Write("Please enter a valid personal number (YYMMDDNNNN): ");
+                stringInput = Console.ReadLine();
             }
-            Console.WriteLine($@"
-Do you want to view a specific member information write 'yes'.
-To return to main menu enter any other key.
-");
-        }
-
-        public int GetPersonalNumber()
-        {
-            int num;
-            Console.Write("Enter your personal number (10 digit):");
-            bool isInt = int.TryParse(Console.ReadLine(), out num);
-            bool validId = num.ToString().Length == 10;
-
-            while (!(isInt && validId))
-            {
-
-                Console.Write("Please enter a valid number:");
-                isInt = int.TryParse(Console.ReadLine(), out num);
-                validId = num.ToString().Length == 10;
-            }
-
-            return num;
+            return stringInput;
         }
 
         public string GetName()
@@ -212,49 +249,10 @@ To return to main menu enter any other key.
             while (name.Length > 15 || name.Length < 2)
             {
                 Console.Clear();
-                Console.WriteLine("Enter your name (min 2 characters, max 15 characters):");
+                Console.Write("Enter your name (min 2 characters, max 15 characters): ");
                 name = Console.ReadLine();
             }
             return name;
-        }
-
-        public void PresentBoats(ReadOnlyCollection<Boat> boats)
-        {
-            Console.Clear();
-            if (boats.Count == 0) {
-                Console.WriteLine($@"
-THERE ARE NO BOATS
-- - - - - - - - - - - - - - - -
-Enter any other key to return to main menu.
-");
-            } else {
-                Console.WriteLine($@"
-BOATS:
-- - - - - - - - - - - - - - - -");
-                foreach (Boat boat in boats)
-                {
-                    Console.WriteLine($"Boat id: {boat.Id}, boat type: {boat.Type}, boat length: {boat.Length}");
-                };
-                Console.WriteLine($@"
-- - - - - - - - - - - - - - - -
-Do you want to manage a boat write 'yes'.
-Enter any other key to return to main menu.
-");
-            }
-            
-        }
-
-        public void PresentBoat(Boat boat)
-        {
-            Console.Clear();
-            Console.WriteLine($@"
-BOAT:
-- - - - - - - - - - - - - - - -
-Boat id: {boat.Id}, boat type: {boat.Type}, boat length: {boat.Length}
-- - - - - - - - - - - - - - - -
-To delete boat write 'delete boat'.
-To change information about the boat write 'boat information'.
-");
         }
 
         public Event GetEvent()
@@ -305,7 +303,6 @@ To change information about the boat write 'boat information'.
             {
                 return Event.EnterId;
             }
-
             return Event.None;
         }
     }

@@ -1,17 +1,4 @@
 <?xml version="1.0"?>
 <memberRegistry>
-  <member id="1" name="Pär Karlsson" personalNumber="8107223122">
-    <boat id="1" type="Kayak" length="7" />
-    <boat id="2" type="Sailboat" length="12" />
-    <boat id="3" type="Motorsailer" length="5" />
-  </member>
-  <member id="2" name="Johan Andersson" personalNumber="9107223122">
-    <boat id="4" type="Other" length="10" />
-    <boat id="5" type="Other" length="15" />
-    <boat id="6" type="Sailboat" length="6" />
-    <boat id="7" type="Kayak" length="15" />
-  </member>
-  <member id="3" name="Kurt Engelbrekt" personalNumber="9907223122">
-    <boat id="8" type="Sailboat" length="4" />
-  </member>
+  <member id="1" name="Testing" personalNumber="7512310777" />
 </memberRegistry>
