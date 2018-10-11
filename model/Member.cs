@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace _1dv607_W2
@@ -57,6 +58,11 @@ namespace _1dv607_W2
         public ReadOnlyCollection<Boat> Boats
         {
             get { return _boats.AsReadOnly(); }
+        }
+
+        public Boat GetBoat(int id)
+        {
+            return _boats.Where(boat => boat.Id == id).Last();
         }
 
         public Member(string inputName, string inputPersonalNumber, int id, List<Boat> boats)

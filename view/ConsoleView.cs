@@ -7,7 +7,6 @@ namespace _1dv607_W2
 {
     public class ConsoleView
     {
-        private int _empty = 0;
         public enum Event
         {
             CreateMember,
@@ -19,7 +18,7 @@ namespace _1dv607_W2
             ListBoats,
             MemberChange,
             DeleteBoat,
-            BoatInformation,
+            ChangeBoat,
             EnterId,
             None,
         }
@@ -142,7 +141,7 @@ BOAT:
 Boat id: {boat.Id}, boat type: {boat.Type}, boat length: {boat.Length}
 - - - - - - - - - - - - - - - -
 To delete boat write 'delete boat'.
-To change information about the boat write 'boat information'.
+To change information about the boat write 'change boat'.
 ");
         }
 
@@ -201,14 +200,15 @@ To change information about the boat write 'boat information'.
         {
             Console.Write("Enter the id: ");
             int num;
+            int empty = 0;
             bool isInt = int.TryParse(Console.ReadLine(), out num);
-            bool validId = members.Count(member => member.Id == num) != _empty;
+            bool validId = members.Count(member => member.Id == num) != empty;
 
             while (!(isInt && validId))
             {
                 Console.Write("Please enter a valid id: ");
                 isInt = int.TryParse(Console.ReadLine(), out num);
-                validId = members.Count(member => member.Id == num) != _empty;
+                validId = members.Count(member => member.Id == num) != empty;
             }
             return num;
         }
@@ -217,14 +217,15 @@ To change information about the boat write 'boat information'.
         {
             Console.Write("Enter the id: ");
             int num;
+            int empty = 0;
             bool isInt = int.TryParse(Console.ReadLine(), out num);
-            bool validId = boats.Count(boat => boat.Id == num) != _empty;
+            bool validId = boats.Count(boat => boat.Id == num) != empty;
 
             while (!(isInt && validId))
             {
                 Console.Write("Please enter a valid id: ");
                 isInt = int.TryParse(Console.ReadLine(), out num);
-                validId = boats.Count(boat => boat.Id == num) != _empty;
+                validId = boats.Count(boat => boat.Id == num) != empty;
             }
             return num;
         }
@@ -258,52 +259,47 @@ To change information about the boat write 'boat information'.
         public Event GetEvent()
         {
             string inputString = System.Console.ReadLine();
-            if (inputString == "create")
+            Event e;
+            switch (inputString)
             {
-                return Event.CreateMember;
+                case "create":
+                    e = Event.CreateMember;
+                    break;
+                case "list":
+                    e = Event.List;
+                    break;
+                case "verbose":
+                    e = Event.VerboseList;
+                    break;
+                case "exit":
+                    e = Event.Exit;
+                    break;
+                case "delete":
+                    e = Event.DeleteMember;
+                    break;
+                case "change":
+                    e = Event.MemberChange;
+                    break;
+                case "new boat":
+                    e = Event.NewBoat;
+                    break;
+                case "boats":
+                    e = Event.ListBoats;
+                    break;
+                case "delete boat":
+                    e = Event.DeleteBoat;
+                    break;
+                case "change boat":
+                    e = Event.ChangeBoat;
+                    break;
+                case "yes":
+                    e = Event.EnterId;
+                    break;
+                default:
+                    e = Event.None;
+                    break;
             }
-            if (inputString == "list")
-            {
-                return Event.List;
-            }
-            if (inputString == "verbose")
-            {
-                return Event.VerboseList;
-            }
-            if (inputString == "exit")
-            {
-                return Event.Exit;
-            }
-            if (inputString == "delete")
-            {
-                return Event.DeleteMember;
-            }
-            if (inputString == "change")
-            {
-                return Event.MemberChange;
-            }
-            if (inputString == "new boat")
-            {
-                return Event.NewBoat;
-            }
-
-            if (inputString == "boats")
-            {
-                return Event.ListBoats;
-            }
-            if (inputString == "delete boat")
-            {
-                return Event.DeleteBoat;
-            }
-            if (inputString == "boat information")
-            {
-                return Event.BoatInformation;
-            }
-            if (inputString == "yes")
-            {
-                return Event.EnterId;
-            }
-            return Event.None;
+            return e;
         }
     }
 }

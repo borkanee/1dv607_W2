@@ -36,6 +36,7 @@ namespace _1dv607_W2
 
                 e = view.GetEvent();
 
+                // SHOW MEMBER INFO
                 if (e == ConsoleView.Event.EnterId)
                 {
                     int memberId = view.GetId(members);
@@ -44,38 +45,41 @@ namespace _1dv607_W2
 
                     e = view.GetEvent();
 
-                    if (e == ConsoleView.Event.MemberChange) {
+                    // CHANGE MEMBER
+                    if (e == ConsoleView.Event.MemberChange)
+                    {
                         string inputName = view.GetName();
                         string inputPersonalNum = view.GetPersonalNumber();
                         registry.ChangeMember(memberId, inputName, inputPersonalNum);
 
                     }
-                    if (e == ConsoleView.Event.DeleteMember) {
+                    // DELETE MEMBER
+                    if (e == ConsoleView.Event.DeleteMember)
+                    {
                         registry.DeleteMember(memberId);
                     }
-                    if (e == ConsoleView.Event.NewBoat) {
+                    // ADD A BOAT
+                    if (e == ConsoleView.Event.NewBoat)
+                    {
                         view.PresentBoatTypes();
                         BoatType boatType = view.GetBoatType();
                         int boatLength = view.GetBoatLength();
                         registry.AddBoat(memberId, boatType, boatLength);
                     }
-                    if (e == ConsoleView.Event.ListBoats) {
+                    // LIST BOATS
+                    if (e == ConsoleView.Event.ListBoats)
+                    {
                         view.PresentBoats(member.Boats);
                         e = view.GetEvent();
-
+                        // SHOW BOAT INFORMATION
                         if (e == ConsoleView.Event.EnterId)
                         {
                             int boatId = view.GetId(member.Boats);
+                            view.PresentBoat(member.GetBoat(boatId));
 
-                            foreach (Boat boat in member.Boats)
-                            {
-                                if (boat.Id == boatId)
-                                {
-                                    view.PresentBoat(boat);
-                                }
-                            }
                             e = view.GetEvent();
-                            if (e == ConsoleView.Event.BoatInformation)
+                            // CHANGE BOAT
+                            if (e == ConsoleView.Event.ChangeBoat)
                             {
                                 view.PresentBoatTypes();
                                 BoatType boatType = view.GetBoatType();
@@ -89,10 +93,8 @@ namespace _1dv607_W2
                         }
                     }
                 }
-                
                 return true;
             }
-
             //TO EXIT PROGRAM
             if (e == ConsoleView.Event.Exit)
             {

@@ -1,4 +1,6 @@
 <?xml version="1.0"?>
 <memberRegistry>
-  <member id="1" name="Testing" personalNumber="7512310777" />
+  <member id="1" name="Testing" personalNumber="7512310777">
+    <boat id="1" type="Other" length="15" />
+  </member>
 </memberRegistry>
