@@ -1,15 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RuntimeIdentifiers>win10-x64;osx.10.11-x64;ubuntu.16.10-x64</RuntimeIdentifiers>
-    <RootNamespace>_1dv607_W2</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include=".\members.xml">
-    </Content>
-</ItemGroup>
+    <PackageReference Include="Microsoft.Packaging.Tools.Trimming" Version="1.1.0-preview1-26619-01" />
+  </ItemGroup>
 
 </Project>

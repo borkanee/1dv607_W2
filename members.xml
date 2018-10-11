@@ -1,11 +1,3 @@
 <?xml version="1.0"?>
 <memberRegistry>
-  <member id="1" name="Testing" personalNumber="9108229393">
-    <boat id="4" type="Motorsailer" length="12" />
-  </member>
-  <member id="3" name="yesyes" personalNumber="9101210000">
-    <boat id="3" type="Kayak" length="3" />
-  </member>
-  <member id="4" name="yesyes" personalNumber="91012101110" />
-  <member id="5" name="hehe" personalNumber="8101219922" />
 </memberRegistry>
