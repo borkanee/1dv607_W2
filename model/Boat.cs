@@ -5,8 +5,11 @@ namespace _1dv607_W2
     public class Boat
     {
         private BoatType _type;
+
         private int _length;
+
         private int _id;
+
         public BoatType Type
         {
             get { return _type; }

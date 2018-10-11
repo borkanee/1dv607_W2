@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace _1dv607_W2
 {
-    public class User
+    public class MemberController
     {
         ConsoleView.Event e;
 

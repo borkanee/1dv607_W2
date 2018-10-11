@@ -9,10 +9,10 @@ namespace _1dv607_W2
             try
             {
                 ConsoleView view = new ConsoleView();
-                User user = new User();
+                MemberController memberController = new MemberController();
                 Registry registry = new Registry();
 
-                while (user.ManageMember(view, registry)) ;
+                while (memberController.ManageMember(view, registry)) ;
             }
             catch (ArgumentOutOfRangeException ex)
             {
