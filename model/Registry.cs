@@ -10,10 +10,20 @@ namespace _1dv607_W2
     {
         private XmlDocument _doc;
 
+        private readonly string _path;
+
+        private int _memberId;
+
+        private int _boatId;
+
         public Registry()
         {
+            _path = @"./members.xml";
             _doc = new XmlDocument();
-            _doc.Load(@"./members.xml");
+            _doc.Load(_path);
+
+            SetMemberId();
+            SetBoatId();
         }
 
         public Member GetMemberInfo(int memberId)
@@ -49,36 +59,32 @@ namespace _1dv607_W2
 
         public void AddMember(string inputName, string inputPersonalNum)
         {
-            int id = GetMemberId();
-
             XmlNode memberRegistry = _doc.SelectSingleNode("//memberRegistry");
 
             XmlElement xmlMember = _doc.CreateElement("member");
-            xmlMember.SetAttribute("id", id.ToString());
+            xmlMember.SetAttribute("id", _memberId.ToString());
             xmlMember.SetAttribute("name", inputName);
             xmlMember.SetAttribute("personalNumber", inputPersonalNum);
 
             memberRegistry.AppendChild(xmlMember);
 
-            _doc.Save(@"./members.xml");
+            _doc.Save(_path);
+            _memberId++;
         }
 
-        private int GetMemberId()
+        private void SetMemberId()
         {
-            int memberId;
             XmlNodeList members = _doc.SelectNodes("//memberRegistry/member");
             if (members.Count == 0)
             {
-                memberId = 1;
+                _memberId = 1;
             }
             else
             {
-                memberId = members
+                _memberId = members
              .Cast<XmlElement>()
              .Max(member => int.Parse(member.Attributes["id"].Value)) + 1;
-
             }
-            return memberId;
         }
 
         public void ChangeMember(int newId, string newName, string newPersonalNumber)
@@ -93,7 +99,7 @@ namespace _1dv607_W2
                     memberNode.Attributes["personalNumber"].Value = newPersonalNumber;
                 }
             }
-            _doc.Save(@"./members.xml");
+            _doc.Save(_path);
 
         }
 
@@ -107,18 +113,15 @@ namespace _1dv607_W2
                     memberNode.ParentNode.RemoveChild(memberNode);
                 }
             }
-            _doc.Save(@"./members.xml");
-
+            _doc.Save(_path);
         }
 
         public void AddBoat(int memberId, BoatType boatType, int boatLength)
         {
-            int boatId = getBoatId();
-
             XmlNodeList memberNodes = _doc.SelectNodes("//memberRegistry/member");
 
             XmlElement xmlBoat = _doc.CreateElement("boat");
-            xmlBoat.SetAttribute("id", boatId.ToString());
+            xmlBoat.SetAttribute("id", _boatId.ToString());
             xmlBoat.SetAttribute("type", boatType.ToString());
             xmlBoat.SetAttribute("length", boatLength.ToString());
 
@@ -129,25 +132,24 @@ namespace _1dv607_W2
                     memberNode.AppendChild(xmlBoat);
                 }
             }
-            _doc.Save(@"./members.xml");
+            _doc.Save(_path);
+            _boatId++;
         }
 
-        private int getBoatId()
+        private void SetBoatId()
         {
-            int boatId;
             XmlNodeList boats = _doc.SelectNodes("//member/boat");
 
             if (boats.Count == 0)
             {
-                boatId = 1;
+                _boatId = 1;
             }
             else
             {
-                boatId = boats
+                _boatId = boats
                 .Cast<XmlElement>()
                 .Max(boat => int.Parse(boat.Attributes["id"].Value)) + 1;
             }
-            return boatId;
         }
 
         public void DeleteBoat(int boatId)
@@ -160,7 +162,7 @@ namespace _1dv607_W2
                     boatNode.ParentNode.RemoveChild(boatNode);
                 }
             }
-            _doc.Save(@"./members.xml");
+            _doc.Save(_path);
         }
 
         public void ChangeBoat(int boatId, BoatType boatType, int boatLength)
@@ -174,8 +176,7 @@ namespace _1dv607_W2
                     boatNode.Attributes["length"].Value = boatLength.ToString();
                 }
             }
-            _doc.Save(@"./members.xml");
-
+            _doc.Save(_path);
         }
     }
 }
