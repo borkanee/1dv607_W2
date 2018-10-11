@@ -5,10 +5,10 @@ namespace _1dv607_W2
     public class User
     {
         ConsoleView.Event e;
+
         public bool ManageMember(ConsoleView view, Registry registry)
         {
             view.PresentFirstMsg();
-
             e = view.GetEvent();
 
             //CREATE A MEMBER
@@ -53,11 +53,13 @@ namespace _1dv607_W2
                         registry.ChangeMember(memberId, inputName, inputPersonalNum);
 
                     }
+
                     // DELETE MEMBER
                     if (e == ConsoleView.Event.DeleteMember)
                     {
                         registry.DeleteMember(memberId);
                     }
+
                     // ADD A BOAT
                     if (e == ConsoleView.Event.NewBoat)
                     {
@@ -66,11 +68,13 @@ namespace _1dv607_W2
                         int boatLength = view.GetBoatLength();
                         registry.AddBoat(memberId, boatType, boatLength);
                     }
+
                     // LIST BOATS
                     if (e == ConsoleView.Event.ListBoats)
                     {
                         view.PresentBoats(member.Boats);
                         e = view.GetEvent();
+
                         // SHOW BOAT INFORMATION
                         if (e == ConsoleView.Event.EnterId)
                         {
@@ -78,6 +82,7 @@ namespace _1dv607_W2
                             view.PresentBoat(member.GetBoat(boatId));
 
                             e = view.GetEvent();
+
                             // CHANGE BOAT
                             if (e == ConsoleView.Event.ChangeBoat)
                             {
@@ -86,6 +91,8 @@ namespace _1dv607_W2
                                 int boatLength = view.GetBoatLength();
                                 registry.ChangeBoat(boatId, boatType, boatLength);
                             }
+
+                            // DELETE BOAT
                             if (e == ConsoleView.Event.DeleteBoat)
                             {
                                 registry.DeleteBoat(boatId);
@@ -95,12 +102,12 @@ namespace _1dv607_W2
                 }
                 return true;
             }
+
             //TO EXIT PROGRAM
             if (e == ConsoleView.Event.Exit)
             {
                 return false;
             }
-            //OR ELSE
             return true;
         }
     }

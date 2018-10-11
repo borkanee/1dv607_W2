@@ -181,6 +181,7 @@ To change information about the boat write 'change boat'.
         public int GetBoatLength()
         {
             Console.Write("Enter the length of your boat: ");
+           
             int num;
 
             bool isInt = int.TryParse(Console.ReadLine(), out num);
@@ -192,15 +193,16 @@ To change information about the boat write 'change boat'.
                 isInt = int.TryParse(Console.ReadLine(), out num);
                 validLength = num > 1 && num < 21;
             }
-
             return num;
         }
 
         public int GetId(ReadOnlyCollection<Member> members)
         {
             Console.Write("Enter the id: ");
+
             int num;
             int empty = 0;
+
             bool isInt = int.TryParse(Console.ReadLine(), out num);
             bool validId = members.Count(member => member.Id == num) != empty;
 
@@ -216,8 +218,10 @@ To change information about the boat write 'change boat'.
         public int GetId(ReadOnlyCollection<Boat> boats)
         {
             Console.Write("Enter the id: ");
+
             int num;
             int empty = 0;
+
             bool isInt = int.TryParse(Console.ReadLine(), out num);
             bool validId = boats.Count(boat => boat.Id == num) != empty;
 
@@ -233,6 +237,7 @@ To change information about the boat write 'change boat'.
         public string GetPersonalNumber()
         {
             Console.Write("Enter your personal number (YYMMDDNNNN): ");
+            
             string stringInput = Console.ReadLine();
 
             while (!Regex.IsMatch(stringInput, @"[0-9]{2}(0[1-9]|(10|11|12))(0[1-9]|[1-2][0-9]|3[0-1])[0-9]{4}$"))

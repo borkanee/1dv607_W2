@@ -100,7 +100,6 @@ namespace _1dv607_W2
                 }
             }
             _doc.Save(_path);
-
         }
 
         public void DeleteMember(int memberId)
